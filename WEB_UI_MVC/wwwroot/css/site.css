@@ -1,0 +1,51 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+    img[src="~/images/ADMIN.png"], img[src="~/images/OMNI-PM.png"] {
+        width: 100px;
+    }
+}
+
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.main-content {
+    margin-bottom: 60px; /* Ajustez la valeur selon vos besoins */
+}
+
+.hide {
+    display: none;
+}
+
+
+/* Style du footer */
+footer {
+    position: fixed; /* Position fixe pour rester en bas */
+    left: 0;
+    bottom: 0;
+    width: 100%; /* Prend toute la largeur de l'écran */
+    background-color: #fff; /* Couleur de fond du footer */
+    text-align: center;
+    padding: 10px 0; /* Espacement intérieur du footer */
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* Ombre sous le footer */
+}
+
+/* Masquer tous les éléments de la page lors de l'impression */
+@media print {
+    header, footer, #buttonsPrint {
+        display: none;
+    }
+}

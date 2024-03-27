@@ -1,0 +1,140 @@
+﻿@model WEB_UI_MVC.ViewModels.TdbViewModel
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM-ADMIN";
+    ViewData["Title_P2"] = "Voir les statistiques des projets";
+}
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                <img src="~/images/ADMIN.png" style="width:160px" alt="omniadmin_img">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="TDB" asp-action="Projets">TDB</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                        </a>
+                        <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <li>
+                                Mr/Mme. <span class="text-primary">@Model.User.Name</span>
+                            </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.User.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container main-content">
+    <main role="main" class="pb-3">
+        <h1 class="text-center">Liste des <span class="text-primary">projets - Statistiques</span></h1>
+
+        <div class="my-5">
+            <div class="text-center">
+                <i>Rechercher un projet</i>
+            </div>
+            <input class="form-control d-block mx-auto w-50 mt-2" id="searchInput" placeholder="Rechercher par nom de projet" />
+        </div>
+
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Projet.ProjectName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Projet.HeuresTotal)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="projectTableBody">
+                @foreach (var item in Model.Projets)
+                {
+                    <tr class="project @(Model.Projets.IndexOf(item) >= 4 ? "hide" : "")">
+                        <td>@Html.DisplayFor(modelItem => item.ProjectName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.HeuresTotal)</td>
+                        <td>
+                            <a href="@Url.Action("Statistiques", "TDB", new { id_projet = item.Id, nom_projet = item.ProjectName })" class="btn btn-primary">
+                                <i class="fas fa-chart-bar"></i> Statistiques
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button id="btnAfficherPlus" class="btn text-white d-block mx-auto btn-info mt-3">Afficher plus</button>
+    </main>
+</div>
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var btnAfficherPlus = document.getElementById('btnAfficherPlus');
+        var projectsCachees = document.querySelectorAll('.project.hide');
+
+        btnAfficherPlus.addEventListener('click', function () {
+            projectsCachees.forEach(function (project) {
+                project.classList.toggle('hide');
+            });
+
+            if (btnAfficherPlus.textContent === "Afficher plus") {
+                btnAfficherPlus.textContent = "Afficher moins";
+            } else {
+                btnAfficherPlus.textContent = "Afficher plus";
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var searchInput = document.getElementById('searchInput');
+        var projectTableBody = document.getElementById('projectTableBody');
+
+        searchInput.addEventListener('input', function () {
+            var searchText = this.value.toLowerCase();
+            var rows = projectTableBody.getElementsByTagName('tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                var projectName = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+                rows[i].style.display = projectName.includes(searchText) ? '' : 'none';
+            }
+        });
+    });
+</script>
+
+
+
+
+
+

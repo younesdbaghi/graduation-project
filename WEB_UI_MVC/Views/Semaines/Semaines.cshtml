@@ -1,0 +1,139 @@
+﻿@model WEB_UI_MVC.ViewModels.SemainesViewModel
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM";
+    ViewData["Title_P2"] = "Semaines";
+}
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                <img src="~/images/OMNI-PM.png" style="width:160px" alt="omnipm_img" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Nouveautés</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Semaines" asp-action="Semaines">Semaines</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                        </a>
+                        <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <li>
+                                Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span>
+                            </li>
+                            <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container main-content">
+    <main role="main" class="pb-3">
+        <h1 class="text-center text-primary">Liste des <span>semaines</span></h1>
+        <h4 class="text-center mb-5">de Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span></h4>
+        <p class="text-center">
+            <a class="btn btn-primary w-100" asp-action="Ajouter"><i class="fas fa-plus"></i> Ajouter une nouvelle semaine travaillée</a>
+        </p>
+        @if (Model.Semaines.Count != 0)
+        {
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Semaine.WeekNumber)</th>
+                        <th>@Html.DisplayNameFor(model => model.Semaine.StatusWeek)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Semaines)
+                    {
+                        <tr class="week @(Model.Semaines.IndexOf(item) >= 4 ? "hide" : "")">
+                            <td><i class="fas fa-calendar-alt me-2"></i> @Html.ActionLink(item.WeekNumber, "SemaineProjets", "SemaineProjets", new { id = item.Id }, new { @class = "text-decoration-none" })</td>
+                            <td>@Html.DisplayFor(modelItem => item.StatusWeek)</td>
+                            <td>
+                                <a href="@Url.Action("SemaineProjets", "SemaineProjets", new { id = item.Id })" class="btn btn-primary"><i class="fas fa-tasks"></i> Projets</a>
+                                <a href="@Url.Action("Supprimer", new { id = item.Id })" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button id="btnAfficherPlus" class="btn text-white d-block mx-auto btn-info mt-3">Afficher plus</button>
+        }
+
+        else
+        {
+            <p class="text-center">Aucune semaine enregistrée.</p>
+        }
+    </main>
+</div>
+
+
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Script pour afficher les alertes -->
+<script>
+    function showAlert(icon, title, message) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: message
+        });
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        var successMessage = '@(TempData["action"])';
+
+        if (successMessage == "Ajouter_Sem") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont ajoutées avec succés");
+        }
+        else if (successMessage == "Supprimer_Sem") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont supprimées avec succés");
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var btnAfficherPlus = document.getElementById('btnAfficherPlus');
+        var weeksCachees = document.querySelectorAll('.user.hide');
+
+        btnAfficherPlus.addEventListener('click', function () {
+            weeksCachees.forEach(function (week) {
+                week.classList.toggle('hide');
+            });
+
+            if (btnAfficherPlus.textContent === "Afficher plus") {
+                btnAfficherPlus.textContent = "Afficher moins";
+            } else {
+                btnAfficherPlus.textContent = "Afficher plus";
+            }
+        });
+    });
+</script>

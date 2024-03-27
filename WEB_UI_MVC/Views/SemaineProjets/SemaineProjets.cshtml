@@ -1,0 +1,177 @@
+﻿@using WEB_UI_MVC.ViewModels
+@model WEB_UI_MVC.ViewModels.SemainesViewModel
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM";
+    ViewData["Title_P2"] = "Les projets de cette semaine";
+}
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                <img src="~/images/OMNI-PM.png" style="width:160px" alt="omnipm_img" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Nouveautés</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Semaines" asp-action="Semaines">Semaines</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                        </a>
+                        <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <li>
+                                Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span>
+                            </li>
+                            <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container main-content">
+    <main role="main" class="pb-3">
+        <h1 class="text-center mb-4">Les projets travaillés pendant la semaine <span class="text-primary">@Model.Semaine.WeekNumber</span></h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <table class="table">
+                    <tr>
+                        <th><i class="fas fa-clock"></i> Heures Saisies</th>
+                        <td>@Model.TotalSaisis</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-check"></i> Heures Approuvées</th>
+                        <td>@Model.TotalApprouvees</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-times"></i> Heures Non Approuvées</th>
+                        <td>@Model.TotalNonApprouvees</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-gift"></i> Bonus</th>
+                        <td>@Model.Bonus</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-center">
+            @Html.ActionLink("Ajouter d'autres heures travaillées", "Ajouter", "SemaineProjets", new { id = @Model.Semaine.Id }, new { @class = "btn btn-primary w-50 mb-3" })
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.ProjectName)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.Quotation)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppMonday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppTuesday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppWednesday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppThursday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppFriday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppSaturday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.NoAppSunday)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.Bonus)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.TotalApp)</th>
+                            <th>@Html.DisplayNameFor(model => model.S_Projet.TotalNoApp)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.S_Projets)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.ProjectName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quotation)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppMonday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppTuesday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppWednesday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppThursday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppFriday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppSaturday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NoAppSunday)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Bonus)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TotalApp)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TotalNoApp)</td>
+                                <td>
+                                    <a href="@Url.Action("Modifier", "SemaineProjets", new { id = item.Id })" class="btn btn-info text-white me-1" role="button"><i class="fas fa-edit"></i></a>
+                                    <a href="@Url.Action("Details", "SemaineProjets", new { id = item.Id })" class="btn btn-secondary text-white me-1" role="button"><i class="fas fa-info-circle"></i></a>
+                                    <a href="@Url.Action("Supprimer", "SemaineProjets", new { id = item.Id, id_week = item.WeekId })" class="btn btn-danger text-white me-1" role="button"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+           <div class="col-md-6">
+                <a class="btn btn-secondary w-100" asp-controller="Semaines" asp-action="Semaines">
+                    <i class="fas fa-list"></i> Retourner à la liste des semaines
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Script pour afficher les alertes -->
+<script>
+    function showAlert(icon, title, message) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: message
+        });
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        var successMessage = '@(TempData["action"])';
+
+        if (successMessage == "Ajouter_Sem_Proj") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont ajoutées avec succés");
+        }
+        else if (successMessage == "Modifier_Sem_Proj") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont modifiées avec succés");
+        }
+        else if (successMessage == "Supprimer_Sem_Proj") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont supprimées avec succés");
+        }
+        else if (successMessage == "Valider_Sem_Proj") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont validées avec succés");
+        }
+        else if (successMessage == "Invalider_Sem_Proj") {
+            showAlert('success', 'Succès', "Les heures travaillées dans ce projet dans la semaine @Model.Semaine.WeekNumber sont invalidées avec succés");
+        }
+    });
+</script>

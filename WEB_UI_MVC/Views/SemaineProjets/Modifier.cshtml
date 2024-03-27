@@ -1,0 +1,168 @@
+﻿@model WEB_UI_MVC.ViewModels.SemainesViewModel
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM";
+    ViewData["Title_P2"] = "Modifier les heures travaillées dans cette semaine";
+}
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                <img src="~/images/OMNI-PM.png" style="width:160px" alt="omnipm_img" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Nouveautés</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Semaines" asp-action="Semaines">Semaines</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                        </a>
+                        <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <li>
+                                Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span>
+                            </li>
+                            <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container main-content">
+    <main role="main" class="pb-3">
+
+        <h1>Modifier les heures travaillées dans la semaine <span class="text-primary">"@Model.Semaine.WeekNumber"</span></h1>
+
+        <div class="card mt-5 mx-auto" style="max-width: 500px;">
+            <div class="card-body">
+                <h4 class="card-title text-center">Modifier les heures travaillées</h4>
+                <hr />
+                <form asp-action="Modifier">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label for="projetSelect" class="control-label"><i class="fas fa-project-diagram"></i> Nom du projet</label>
+                        <select id="projetSelect" asp-for="@Model.S_Projet.ProjectName" class="form-control">
+                            <option value="">-- Sélectionner un projet --</option>
+                            @foreach (var projet in Model.Projets)
+                            {
+                                <option id="@projet.Id" value="@projet.ProjectName">@projet.ProjectName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="@Model.S_Projet.ProjectName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.S_Projet.Quotation" class="control-label"></label>
+                        <select id="quotationSelect" asp-for="@Model.S_Projet.Quotation" class="form-control">
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                        <span asp-validation-for="@Model.S_Projet.Quotation" class="text-danger"></span>
+                    </div>
+                    
+                    <!-- Lundi -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppMonday" class="control-label"><i class="fas fa-calendar-day"></i> Lundi</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppMonday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppMonday" class="text-danger"></span>
+                    </div>
+
+                    <!-- Mardi -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppTuesday" class="control-label"><i class="fas fa-calendar-day"></i> Mardi</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppTuesday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppTuesday" class="text-danger"></span>
+                    </div>
+
+                    <!-- Mercredi -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppWednesday" class="control-label"><i class="fas fa-calendar-day"></i> Mercredi</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppWednesday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppWednesday" class="text-danger"></span>
+                    </div>
+
+                    <!-- Jeudi -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppThursday" class="control-label"><i class="fas fa-calendar-day"></i> Jeudi</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppThursday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppThursday" class="text-danger"></span>
+                    </div>
+
+                    <!-- Vendredi -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppFriday" class="control-label"><i class="fas fa-calendar-day"></i> Vendredi</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppFriday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppFriday" class="text-danger"></span>
+                    </div>
+
+                    <!-- Samedi -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppSaturday" class="control-label"><i class="fas fa-calendar-day"></i> Samedi</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppSaturday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppSaturday" class="text-danger"></span>
+                    </div>
+
+                    <!-- Dimanche -->
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.S_Projet.NoAppSunday" class="control-label"><i class="fas fa-calendar-day"></i> Dimanche</label>
+                        <input type="number" asp-for="@Model.S_Projet.NoAppSunday" class="form-control" placeholder="Entrez le nombre d'heures travaillées" />
+                        <span asp-validation-for="@Model.S_Projet.NoAppSunday" class="text-danger"></span>
+                    </div>
+
+                    <input asp-for="@Model.S_Projet.Id" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.MondayStatus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.TuesdayStaus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.WednesdayStatus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.ThursdayStatus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.FridayStatus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.SaturdayStatus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.SundayStatus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppMonday" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppTuesday" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppWednesday" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppThursday" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppFriday" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppSaturday" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.AppSunday" class="form-control" style="display:none" readonly />
+                    <input asp-for="Bonus" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.TotalApp" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.TotalNoApp" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.WeekId" class="form-control" style="display:none" readonly />
+                    <input asp-for="@Model.S_Projet.UserId" class="form-control" style="display:none" readonly />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-calendar-day"></i> Enregistrer les modifications</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <a asp-action="SemaineProjets" asp-route-id="@Model.S_Projet.WeekId" class="btn btn-secondary"><i class="fas fa-list"></i> Retourner à la liste des semaines</a>
+        </div>
+    </main>
+</div>
+
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+
+<script src="~/js/AddUpdateWeekOrProject.js"></script>

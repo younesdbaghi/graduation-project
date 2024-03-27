@@ -1,0 +1,183 @@
+﻿@model WEB_UI_MVC.ViewModels.SemainesViewModel
+
+@{
+    @if (Model.Utilisateur.Admin == "YES")
+    {
+        ViewData["Title_P1"] = "OMNI-PM-ADMIN";
+        ViewData["Title_P2"] = "Détails des semaines d'utilisateur";
+    }
+    else if (Model.Utilisateur.Admin == "CDP")
+    {
+        ViewData["Title_P1"] = "OMNI-PM-CDP";
+        ViewData["Title_P2"] = "Détails des semaines d'utilisateur";
+    }
+}
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            @if (Model.Utilisateur.Admin == "YES")
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                    <img src="~/images/ADMIN.png" style="width:160px" alt="omniadmin_img">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TDB" asp-action="Projets">TDB</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li>
+                                    Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span>
+                                </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else if (Model.Utilisateur.Admin == "CDP")
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                    <img src="~/images/OMNI-PM.png" style="width:160px" alt="omnipm_img" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li>
+                                    Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span>
+                                </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </nav>
+</header>
+
+
+<div class="container main-content">
+    <main role="main" class="pb-3">
+
+        <div class="card mt-5 mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Détails des heures enregistrées sur <span class="text-primary">@Model.S_Projet.ProjectName</span></h2>
+                <div class="d-flex justify-content-center mb-4">
+                    <form asp-action="ValiderSemaineUser" asp-route-id="@Model.S_Projet.Id" method="post" class="me-3">
+                        <button type="submit" class="btn btn-success">Valider les heures travaillées</button>
+                    </form>
+                    <form asp-action="InvaliderSemaineUser" asp-route-id="@Model.S_Projet.Id" method="post">
+                        <button type="submit" class="btn btn-danger">Ne pas valider les heures travaillées</button>
+                    </form>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Quotation :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.Quotation)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Lundi :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppMonday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Mardi :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppTuesday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Mercredi :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppWednesday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Jeudi :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppThursday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Vendredi :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppFriday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Samedi :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppSaturday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Dimanche :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.AppSunday)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Total heures approuvées :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.TotalApp)</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 text-end">Total heures non approuvées :</div>
+                    <div class="col-sm-6">@Html.DisplayFor(model => model.S_Projet.TotalNoApp)</div>
+                </div>
+
+                <hr />
+
+                <div class="text-center">
+                    <a asp-action="SemaineProjetsUser" asp-controller="SemaineProjets" asp-route-id="@Model.S_Projet.WeekId" asp-route-id_user="@Model.S_Projet.UserId" class="btn btn-primary"><i class="fas fa-list"></i> Retourner à la liste</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>

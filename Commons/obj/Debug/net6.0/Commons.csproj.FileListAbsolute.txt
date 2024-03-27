@@ -1,0 +1,11 @@
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\bin\Debug\net6.0\Commons.deps.json
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\bin\Debug\net6.0\Commons.dll
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\bin\Debug\net6.0\Commons.pdb
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\Commons.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\Commons.AssemblyInfoInputs.cache
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\Commons.AssemblyInfo.cs
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\Commons.csproj.CoreCompileInputs.cache
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\Commons.dll
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\refint\Commons.dll
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\Commons.pdb
+C:\Users\AdMin\Desktop\ProjectOutpoutPFE\Commons\obj\Debug\net6.0\ref\Commons.dll

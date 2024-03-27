@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Referentiel.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51379;http://localhost:51380"
+    }
+  }
+}

@@ -1,0 +1,177 @@
+﻿@model WEB_UI_MVC.ViewModels.TdbViewModel
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM-ADMIN";
+    ViewData["Title_P2"] = "Voir les statistiques du projet";
+}
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                <img src="~/images/ADMIN.png" style="width:160px" alt="omniadmin_img">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="TDB" asp-action="Projets">TDB</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                        </a>
+                        <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <li>
+                                Mr/Mme. <span class="text-primary">@Model.User.Name</span>
+                            </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.User.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container main-content text-center mx-auto" id="DivToPrint">
+    <main role="main" class="pb-3">
+        <h2 class="mt-5 mb-4">TDB - <span class="text-primary">@Model.Projet.ProjectName</span></h2>
+
+        <div class="text-center">
+            <p>Durée du Projet : <span class="text-primary">@Model.Projet.HeuresTotal heures</span></p>
+            <p>Heures Travaillées : <span class="text-primary">@Model.HeuresTravaillees heures</span></p>
+            <p>Progrès du Projet : <span class="text-primary">@Model.Progress %</span></p>
+
+            <!-- Affichage des graphiques -->
+            <div class="mx-auto mt-4 text-center">
+                <div class="row w-75 d-flex justify-content-center">
+                    <div class="col-md-6 mb-4">
+                        <canvas id="projectChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="row w-75 d-flex justify-content-center">
+                    <div class="col-md-6">
+                        <canvas id="userChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="buttonsPrint" class="mt-4">
+            <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
+            <a asp-action="Projets" class="btn btn-secondary ms-2">Retourner à la liste</a>
+        </div>
+    </main>
+</div>
+
+
+
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Données pour le graphique du projet (Pie Chart)
+    var projectChartData = {
+        labels: ['Durée du Projet', 'Heures Travaillées'],
+        datasets: [{
+            label: 'Progrès du Projet',
+            data: [@Model.Projet.HeuresTotal, @Model.HeuresTravaillees],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)', // Bleu pour les heures totales
+                'rgba(75, 192, 192, 0.2)' // Vert pour les heures travaillées
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)', // Couleur de bordure bleue pour les heures totales
+                'rgba(75, 192, 192, 1)' // Couleur de bordure verte pour les heures travaillées
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Suppression des options de l'échelle Y pour un Pie Chart
+    delete projectChartData.datasets[0].yAxisID;
+
+    // Initialisation du graphique avec Chart.js
+    var projectChartCanvas = document.getElementById('projectChart').getContext('2d');
+    new Chart(projectChartCanvas, {
+        type: 'pie', // Modification du type de graphique en Pie Chart
+        data: projectChartData,
+        options: {
+            // Les options spécifiques au Pie Chart peuvent être ajoutées ici
+        }
+    });
+</script>
+
+<script>
+
+    // Données pour le graphique des utilisateurs
+    var userChartData = {
+        labels: [
+    @foreach (var user in Model.UserProjectObject)
+    {
+        @: '@user.NomComplet',
+    }
+        ],
+        datasets: [{
+            label: 'Heures Travaillées',
+            data: [
+    @foreach (var user in Model.UserProjectObject)
+    {
+        @: @user.TotalApprouved,
+        }
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    var userChartCanvas = document.getElementById('userChart').getContext('2d');
+    new Chart(userChartCanvas, {
+        type: 'bar',
+        data: userChartData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

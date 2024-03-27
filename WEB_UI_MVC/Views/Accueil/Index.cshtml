@@ -1,0 +1,158 @@
+﻿@model WEB_UI_MVC.Models.Utilisateurs
+
+@{
+    @if (Model.Admin == "YES")
+    {
+        ViewData["Title_P1"] = "OMNI-PM-ADMIN";
+        ViewData["Title_P2"] = "Accueil";
+    }
+    else if (Model.Admin == "CDP")
+    {
+        ViewData["Title_P1"] = "OMNI-PM-CDP";
+        ViewData["Title_P2"] = "Accueil";
+    }
+    else
+    {
+        ViewData["Title_P1"] = "OMNI-PM";
+        ViewData["Title_P2"] = "Accueil";
+    }
+}
+
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            @if (Model.Admin == "YES")
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                    <img src="~/images/ADMIN.png" style="width:160px" alt="omniadmin_img">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TDB" asp-action="Projets">TDB</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li>
+                                    Mr/Mme. <span class="text-primary">@Model.Name</span>
+                                </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else if (Model.Admin == "CDP")
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                    <img src="~/images/OMNI-PM.png" style="width:160px" alt="omnipm_img" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li>
+                                    Mr/Mme. <span class="text-primary">@Model.Name</span>
+                                </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                    <img src="~/images/OMNI-PM.png" style="width:160px" alt="omnipm_img" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Nouveautés</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Semaines" asp-action="Semaines">Semaines</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li>
+                                    Mr/Mme. <span class="text-primary">@Model.Name</span>
+                                </li>
+                                <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </nav>
+</header>
+
+
+<div class="p-5 container main-content d-flex justify-content-center align-items-center">
+    <main role="main" class="p-5">
+        <h1 class="text-center">Bienvenue, <span class="text-primary">@Model.Name @Model.LastName</span></h1>
+    </main>
+</div>
+
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+

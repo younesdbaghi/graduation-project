@@ -1,0 +1,179 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = WEB_UI_MVC
+build_property.RootNamespace = WEB_UI_MVC
+build_property.ProjectDir = C:\Users\AdMin\Desktop\ProjectOutpoutPFE\WEB_UI_MVC\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\AdMin\Desktop\ProjectOutpoutPFE\WEB_UI_MVC
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Accueil/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjdWVpbFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Password/Changer_Le_MDP.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc3dvcmRcQ2hhbmdlcl9MZV9NRFAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Projets/Ajouter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamV0c1xBam91dGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Projets/Modifier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamV0c1xNb2RpZmllci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Projets/Projets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamV0c1xQcm9qZXRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Projets/Supprimer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamV0c1xTdXBwcmltZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Publications/Ajouter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVibGljYXRpb25zXEFqb3V0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Publications/Modifier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVibGljYXRpb25zXE1vZGlmaWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Publications/Publications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVibGljYXRpb25zXFB1YmxpY2F0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Publications/Supprimer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVibGljYXRpb25zXFN1cHByaW1lci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Quotations/Ajouter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uc1xBam91dGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Quotations/Modifier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uc1xNb2RpZmllci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Quotations/Quotations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uc1xRdW90YXRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Quotations/Supprimer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uc1xTdXBwcmltZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/Ajouter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcQWpvdXRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/DetailsSemaineUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcRGV0YWlsc1NlbWFpbmVVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/Modifier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcTW9kaWZpZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/SemaineProjets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcU2VtYWluZVByb2pldHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/SemaineProjetsUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcU2VtYWluZVByb2pldHNVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/SemaineProjets/Supprimer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZVByb2pldHNcU3VwcHJpbWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Semaines/Ajouter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZXNcQWpvdXRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Semaines/Semaines.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZXNcU2VtYWluZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Semaines/SemainesUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZXNcU2VtYWluZXNVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Semaines/Supprimer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtYWluZXNcU3VwcHJpbWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/Forbidden.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEZvcmJpZGRlbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_LayoutCDP.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRDRFAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_LayoutUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/TDB/Projets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVERCXFByb2pldHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/TDB/Statistiques.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVERCXFN0YXRpc3RpcXVlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Utilisateurs/Ajouter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXRpbGlzYXRldXJzXEFqb3V0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Utilisateurs/Modifier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXRpbGlzYXRldXJzXE1vZGlmaWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Utilisateurs/Supprimer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXRpbGlzYXRldXJzXFN1cHByaW1lci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Utilisateurs/Utilisateurs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXRpbGlzYXRldXJzXFV0aWxpc2F0ZXVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-wh1qnngon5

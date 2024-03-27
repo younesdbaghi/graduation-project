@@ -1,0 +1,101 @@
+﻿@model WEB_UI_MVC.ViewModels.UsersViewModel
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM-ADMIN";
+    ViewData["Title_P2"] = "Supprimer un utilisateur";
+}
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Accueil" asp-action="Index">
+                <img src="~/images/ADMIN.png" style="width:160px" alt="omniadmin_img">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="TDB" asp-action="Projets">TDB</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Utilisateurs" asp-action="Utilisateurs">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Projets" asp-action="Projets">Projets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Publications" asp-action="Publications">Publications</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img src="~/images/USER.jpg" style="width:28px; border-radius:100px;" alt="user_img">
+                        </a>
+                        <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <li>
+                                Mr/Mme. <span class="text-primary">@Model.Utilisateur.Name</span>
+                            </li>
+                            <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container main-content">
+    <main role="main" class="pb-3">
+        <div class="card mt-5 mx-auto" style="max-width: 500px;">
+            <div class="card-body">
+                <h4 class="card-title text-center">Confirmer la suppression <i class="fas fa-trash-alt"></i></h4>
+                <hr />
+                <div class="row mb-3">
+                    <div class="col-sm-5 text-end">Nom :</div>
+                    <div class="col-sm-7">@Model.User.Name @Model.User.LastName</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-5 text-end">Nom d'utilisateur :</div>
+                    <div class="col-sm-7">@Model.User.Username</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-5 text-end">Email :</div>
+                    <div class="col-sm-7">@Model.User.Email</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-5 text-end">Activité :</div>
+                    <div class="col-sm-7">@Model.User.Activity</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-5 text-end">Admin :</div>
+                    <div class="col-sm-7">@Model.User.Admin</div>
+                </div>
+
+                <form asp-action="Supprimer" method="post">
+                    <input type="hidden" asp-for="@Model.User.Id" />
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Confirmer la suppression</button>
+                        <a asp-action="Utilisateurs" class="btn btn-secondary"><i class="fas fa-times"></i> Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+
+
+
+<footer class="border-top footer bg-teritory box-shadow text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
