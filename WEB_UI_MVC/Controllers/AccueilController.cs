@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using WEB_UI_MVC.Auth;
 using WEB_UI_MVC.Models;
 
 namespace WEB_UI_MVC.Controllers
@@ -17,11 +18,15 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int user_auth_id = 8;
+        int user_auth_id = Authentication.Connected_Id; /* 8 */
 
         [HttpGet]
         public IActionResult Index()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id).Result;

@@ -40,7 +40,6 @@ footer {
     background-color: #fff; /* Couleur de fond du footer */
     text-align: center;
     padding: 10px 0; /* Espacement intérieur du footer */
-    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* Ombre sous le footer */
 }
 
 /* Masquer tous les éléments de la page lors de l'impression */

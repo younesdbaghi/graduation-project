@@ -57,7 +57,7 @@
                                 </li>
                                 <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                                <li><a asp-area="" asp-controller="Auth" asp-action="Logout_Traitement" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -95,7 +95,7 @@
                                 </li>
                                 <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                                <li><a asp-area="" asp-controller="Auth" asp-action="Logout_Traitement" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -130,7 +130,7 @@
                                 </li>
                                 <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                                <li><a asp-area="" asp-controller="Auth" asp-action="Logout_Traitement" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="password" class="form-label"><i class="fas fa-lock me-2"></i>Nouveau mot de passe</label>
-                                <input id="password" asp-for="@Model.User.Password" value="" class="form-control" placeholder="Nouveau mot de passe" />
+                                <input id="password" type="password" asp-for="@Model.User.Password" value="" class="form-control" placeholder="Nouveau mot de passe" />
                                 <span asp-validation-for="@Model.User.Password" class="text-danger"></span>
                             </div>
                             <div style="display:none">
@@ -193,7 +193,7 @@
 
 
 
-<footer class="border-top footer bg-teritory box-shadow text-muted">
+<footer class="footer text-muted">
     <div class="container text-center">
         &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
     </div>

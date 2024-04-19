@@ -22,6 +22,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjdWVpbFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Auth/Se_Connecter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxTZV9Db25uZWN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Password/Changer_Le_MDP.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc3dvcmRcQ2hhbmdlcl9MZV9NRFAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -126,16 +130,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEZvcmJpZGRlbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_LayoutAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_LayoutCDP.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRDRFAuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_LayoutUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRVc2VyLmNzaHRtbA==
+[C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/NotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5vdEZvdW5kLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/AdMin/Desktop/ProjectOutpoutPFE/WEB_UI_MVC/Views/Shared/_ValidationScriptsPartial.cshtml]

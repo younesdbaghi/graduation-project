@@ -1,0 +1,88 @@
+﻿@model WEB_UI_MVC.ViewModels.UserLogin
+
+@{
+    ViewData["Title_P1"] = "OMNI-PM";
+    ViewData["Title_P2"] = "S'authentifier";
+}
+
+<div class="container main-content p-5">
+    <div class="text-center mb-5">
+        <img src="~/images/OMNI-PM.png" style="width: 300px;" alt="omnipm_img" class="img-fluid" />
+    </div>
+    <h2 class="text-center text-primary my-2">S'authentifier</h2>
+    <main role="main" class="pb-3">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">Connecting to omni-pm server!...</div>
+                    <div class="card-body" style="background-image: url('/images/BackGround-USERS.jpg'); background-size: cover; background-position: center center;">
+                        <form method="post" action="Login_Traitement">
+                            <div class="form-group mb-3">
+                                <label>Nom d'utilisateur ou e-mail</label>
+                                <div class="input-group">
+                                    <input asp-for="@Model.login" type="text" class="form-control" placeholder="Nom d'utilisateur ou e-mail"/>
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password">Mot de passe</label>
+                                <div class="input-group">
+                                    <input asp-for="@Model.password" type="password" class="form-control" id="password" placeholder="Mot de passe"/>
+                                    <span class="input-group-text" onclick="togglePasswordVisibility()">
+                                        <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn d-block mx-auto btn-primary">Se connecter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="footer text-muted">
+    <div class="container text-center">
+        &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
+    </div>
+</footer>
+
+<!-- Liens vers les bibliothèques nécessaires -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Script pour afficher les alertes -->
+<script>
+    function showAlert(icon, title, message) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: message
+        });
+    }
+
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var passwordIcon = document.getElementById("togglePasswordIcon");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordIcon.classList.remove("fa-eye");
+            passwordIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            passwordIcon.classList.remove("fa-eye-slash");
+            passwordIcon.classList.add("fa-eye");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var successMessage = '@(TempData["action"])';
+
+        if (successMessage == "Invalid_Cred") {
+            showAlert('error', 'Invalid credentials', "Les cordonnées sont incorrectes.");
+        }
+    });
+</script>

@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Text;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.ViewModels;
+using WEB_UI_MVC.Auth;
+
 
 namespace WEB_UI_MVC.Controllers
 {
@@ -20,13 +22,17 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int user_auth_id = 8;
-        int admin_auth_id = 2;
+        int user_auth_id = Authentication.Connected_Id; /* 8 */
+
 
         // GET: Afficher les semaines dans un compte user
         [HttpGet]
         public async Task<IActionResult> Semaines()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<Semaine> semaines = new List<Semaine>();
             List<SemaineProjet> semaineProjets = new List<SemaineProjet>();
@@ -36,6 +42,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "NO")
+                {
+                    return View("Forbidden");
+                }
 
                 HttpResponseMessage responseSem = await _client.GetAsync(_client.BaseAddress + "/UserWeek/api/UserWeek/GetWeeksForSpecUser/" + user_auth_id);
                 if (responseSem.IsSuccessStatusCode)
@@ -43,10 +53,7 @@ namespace WEB_UI_MVC.Controllers
                     string dataSem = await responseSem.Content.ReadAsStringAsync();
                     semaines = JsonConvert.DeserializeObject<List<Semaine>>(dataSem);
                 }
-                if(user.Admin != "NO")
-                {
-                    return View("Forbidden");
-                }
+                
                 var viewModel = new SemainesViewModel
                 {
                     Semaines = semaines,
@@ -67,6 +74,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Ajouter()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<Projet> projets = new List<Projet>();
 
@@ -75,10 +86,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
-            }
-            if (user.Admin != "NO")
-            {
-                return View("Forbidden");
+                if (user.Admin != "NO")
+                {
+                    return View("Forbidden");
+                }
             }
             HttpResponseMessage responseProjets = await _client.GetAsync(_client.BaseAddress + "/Project");
             string dataProjects = await responseProjets.Content.ReadAsStringAsync();
@@ -159,6 +170,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Supprimer(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
@@ -172,13 +187,17 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin != "NO")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await response.Content.ReadAsStringAsync();
                     semaine = JsonConvert.DeserializeObject<Semaine>(data);
                 }
-                if (user.Admin != "NO")
+                else
                 {
-                    return View("Forbidden");
+                    return View("NotFound");
                 }
                 SemainesViewModel pvm = new SemainesViewModel()
                 {
@@ -221,16 +240,24 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> SemainesUser(int id_user)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             Utilisateurs utilis = new Utilisateurs();
             List<Semaine> semaines = new List<Semaine>();
             List<SemaineProjet> semaineProjets = new List<SemaineProjet>();
 
-            HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
+            HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
             if (responseUser.IsSuccessStatusCode)
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES" && user.Admin != "CDP")
+                {
+                    return View("Forbidden");
+                }
 
                 HttpResponseMessage responseSem = await _client.GetAsync(_client.BaseAddress + "/UserWeek/api/UserWeek/GetWeeksForSpecUser/" + id_user);
                 if (responseSem.IsSuccessStatusCode)
@@ -238,10 +265,7 @@ namespace WEB_UI_MVC.Controllers
                     string dataSem = await responseSem.Content.ReadAsStringAsync();
                     semaines = JsonConvert.DeserializeObject<List<Semaine>>(dataSem);
                 }
-                if (user.Admin == "NO")
-                {
-                    return View("Forbidden");
-                }
+                
 
                 HttpResponseMessage response_us = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + id_user);
                 if (response_us.IsSuccessStatusCode)
@@ -259,6 +283,10 @@ namespace WEB_UI_MVC.Controllers
                     };
 
                     return View(viewModel);
+                }
+                else
+                {
+                    return View("NotFound");
                 }
                 return View("Forbidden");
             }

@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System.Text;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.ViewModels;
+using WEB_UI_MVC.Auth;
+
 
 namespace WEB_UI_MVC.Controllers
 {
@@ -19,12 +21,16 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int admin_auth_id=2;
+        int admin_auth_id = Authentication.Connected_Id;
 
         // GET: PublicationsController
         [HttpGet]
         public async Task<IActionResult> Utilisateurs()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<Utilisateurs> utilisateurs = new List<Utilisateurs>();
 
@@ -33,6 +39,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES" && user.Admin != "CDP")
+                {
+                    return View("Forbidden");
+                }
 
                 HttpResponseMessage responseUsers = await _client.GetAsync(_client.BaseAddress + "/User");
                 if (responseUsers.IsSuccessStatusCode)
@@ -41,10 +51,7 @@ namespace WEB_UI_MVC.Controllers
                     utilisateurs = JsonConvert.DeserializeObject<List<Utilisateurs>>(dataUsers);
                 }
 
-                if(user.Admin == "NO")
-                {
-                    return View("Forbidden");
-                }
+                
                 var viewModel = new UsersViewModel
                 {
                     Users = utilisateurs,
@@ -63,6 +70,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Ajouter()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -70,6 +81,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES")
+                {
+                    return View("Forbidden");
+                }
             }
             var viewModel = new UsersViewModel
             {
@@ -77,50 +92,8 @@ namespace WEB_UI_MVC.Controllers
                 User = new() { },
                 Utilisateur = user
             };
-            if (!(user.Admin == "YES"))
-            {
-                return View("Forbidden");
-            }
             return View(viewModel);
         }
-
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> Rechercher(UsersViewModel UVW)
-        //{
-        //    Utilisateurs user = new Utilisateurs();
-        //    List<Utilisateurs> utilisateurs = new List<Utilisateurs>();
-
-        //    HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
-        //    if (responseUser.IsSuccessStatusCode)
-        //    {
-        //        string dataUser = await responseUser.Content.ReadAsStringAsync();
-        //        user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
-
-        //        HttpResponseMessage responseUsers = await _client.GetAsync(_client.BaseAddress + $"/User/api/User/GetByUsername/{UVW.Utilisateur.Username}");
-        //        if (responseUsers.IsSuccessStatusCode)
-        //        {
-        //            string dataUsers = await responseUsers.Content.ReadAsStringAsync();
-        //            utilisateurs = JsonConvert.DeserializeObject<List<Utilisateurs>>(dataUsers);
-        //        }
-
-        //        if (user.Admin == "NO")
-        //        {
-        //            return View("Forbidden");
-        //        }
-        //        var viewModel = new UsersViewModel
-        //        {
-        //            Users = utilisateurs,
-        //            User = new() { },
-        //            Utilisateur = user
-        //        };
-
-        //        return View(viewModel);
-        //    }
-
-        //    return View();
-        //}
 
 
 
@@ -155,6 +128,10 @@ namespace WEB_UI_MVC.Controllers
         {
             try
             {
+                if (!Authentication.Connected)
+                {
+                    return RedirectToAction("Se_Connecter", "Auth");
+                }
                 Utilisateurs user = new Utilisateurs();
 
                 HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -168,9 +145,17 @@ namespace WEB_UI_MVC.Controllers
                     {
                         string dataUser = await responseUser.Content.ReadAsStringAsync();
                         user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                        if (user.Admin != "YES")
+                        {
+                            return View("Forbidden");
+                        }
 
                         string data = await response.Content.ReadAsStringAsync();
                         utilisateurForUpdate = JsonConvert.DeserializeObject<Utilisateurs>(data);
+                    }
+                    else
+                    {
+                        return View("NotFound");
                     }
                     var viewModel = new UsersViewModel
                     {
@@ -178,10 +163,6 @@ namespace WEB_UI_MVC.Controllers
                         User = utilisateurForUpdate,
                         Utilisateur = user
                     };
-                    if (!(user.Admin == "YES"))
-                    {
-                        return View("Forbidden");
-                    }
                     return View(viewModel);
                 }
                 return View();
@@ -222,6 +203,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Supprimer(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -235,9 +220,17 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin != "YES")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await response.Content.ReadAsStringAsync();
                     utilisateur = JsonConvert.DeserializeObject<Utilisateurs>(data);
+                }
+                else
+                {
+                    return View("NotFound");
                 }
                 var viewModel = new UsersViewModel
                 {
@@ -245,10 +238,6 @@ namespace WEB_UI_MVC.Controllers
                     User = utilisateur,
                     Utilisateur = user
                 };
-                if (!(user.Admin == "YES"))
-                {
-                    return View("Forbidden");
-                }
                 return View(viewModel);
             }
             return View();
@@ -285,6 +274,10 @@ namespace WEB_UI_MVC.Controllers
         {
             try
             {
+                if (!Authentication.Connected)
+                {
+                    return RedirectToAction("Se_Connecter", "Auth");
+                }
                 Utilisateurs user = new Utilisateurs();
 
                 HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -298,9 +291,17 @@ namespace WEB_UI_MVC.Controllers
                     {
                         string dataUser = await responseUser.Content.ReadAsStringAsync();
                         user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                        if(user.Id != id)
+                        {
+                            return View("Forbidden");
+                        }
 
                         string data = await response.Content.ReadAsStringAsync();
                         utilisateurForUpdate = JsonConvert.DeserializeObject<Utilisateurs>(data);
+                    }
+                    else
+                    {
+                        return View("NotFound");
                     }
                     var viewModel = new UsersViewModel
                     {

@@ -36,7 +36,7 @@
                             </li>
                             <li><a asp-area="" asp-controller="Password" asp-action="Changer_Le_MDP" asp-route-id="@Model.Utilisateur.Id" class="dropdown-item" style="color: #003D99;">Modifier MDP</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
+                            <li><a asp-area="" asp-controller="Auth" asp-action="Logout_Traitement" class="dropdown-item" style="color: #ff0000;">Se déconnecter</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -119,7 +119,7 @@
 
 
 
-<footer class="border-top footer bg-teritory box-shadow text-muted">
+<footer class="footer text-muted">
     <div class="container text-center">
         &copy; 1989-<span id="currentYear"></span>, <span class="text-primary">OMNI-PM</span>
     </div>

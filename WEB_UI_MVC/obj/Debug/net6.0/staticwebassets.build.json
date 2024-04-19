@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Z3esfpNPYKPU+cUrCmYNqp1mDg78rlaodn56FnAT+Us=",
+  "Hash": "renC0hMPjU5uyWwJFdIB24+Y0FCLo6R23D0oLgWzxcw=",
   "Source": "WEB_UI_MVC",
   "BasePath": "_content/WEB_UI_MVC",
   "Mode": "Default",
@@ -794,6 +794,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\BackGround-USERS.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\AdMin\\Desktop\\ProjectOutpoutPFE\\WEB_UI_MVC\\wwwroot\\images\\icon-website.png",
+      "SourceId": "WEB_UI_MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\AdMin\\Desktop\\ProjectOutpoutPFE\\WEB_UI_MVC\\wwwroot\\",
+      "BasePath": "_content/WEB_UI_MVC",
+      "RelativePath": "images/icon-website.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\icon-website.png"
     },
     {
       "Identity": "C:\\Users\\AdMin\\Desktop\\ProjectOutpoutPFE\\WEB_UI_MVC\\wwwroot\\images\\OMNI-PM.png",

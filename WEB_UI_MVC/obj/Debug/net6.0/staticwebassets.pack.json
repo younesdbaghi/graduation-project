@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\images\\USER.jpg"
     },
     {
+      "Id": "C:\\Users\\AdMin\\Desktop\\ProjectOutpoutPFE\\WEB_UI_MVC\\wwwroot\\images\\icon-website.png",
+      "PackagePath": "staticwebassets\\images\\icon-website.png"
+    },
+    {
       "Id": "C:\\Users\\AdMin\\Desktop\\ProjectOutpoutPFE\\WEB_UI_MVC\\wwwroot\\js\\AddUpdateWeekOrProject.js",
       "PackagePath": "staticwebassets\\js\\AddUpdateWeekOrProject.js"
     },

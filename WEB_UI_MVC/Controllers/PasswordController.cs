@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System.Text;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.ViewModels;
+using WEB_UI_MVC.Auth;
+
 
 namespace WEB_UI_MVC.Controllers
 {
@@ -19,7 +21,7 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int user_auth_id = 8;
+        int user_auth_id = Authentication.Connected_Id; /* 8 */
 
         /* Modifier le mot de passe */
         [HttpGet]
@@ -27,6 +29,10 @@ namespace WEB_UI_MVC.Controllers
         {
             try
             {
+                if (!Authentication.Connected)
+                {
+                    return RedirectToAction("Se_Connecter", "Auth");
+                }
                 Utilisateurs user = new Utilisateurs();
 
                 HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
@@ -36,7 +42,7 @@ namespace WEB_UI_MVC.Controllers
 
                     HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + id);
 
-                    if (response.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode && id == user_auth_id)
                     {
                         string dataUser = await responseUser.Content.ReadAsStringAsync();
                         user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
@@ -53,7 +59,7 @@ namespace WEB_UI_MVC.Controllers
                     }
                     return View("Forbidden");
                 }
-                return View();
+                return View("Forbidden");
             }
             catch (Exception ex)
             {
@@ -69,8 +75,12 @@ namespace WEB_UI_MVC.Controllers
         {
             try
             {
-                Utilisateurs utilisateurForUpdate = new Utilisateurs();
+                if(utilisateur.User.Id != user_auth_id)
+                {
+                    return View("Forbidden");
+                }
 
+                Utilisateurs utilisateurForUpdate = new Utilisateurs();
                 HttpResponseMessage responseUpUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + utilisateur.User.Id);
 
                 if (responseUpUser.IsSuccessStatusCode)

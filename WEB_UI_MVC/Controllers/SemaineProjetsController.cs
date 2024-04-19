@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Text;
+using WEB_UI_MVC.Auth;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.ViewModels;
 
@@ -20,12 +21,16 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int user_auth_id = 8;
-        int admin_auth_id = 2;
+        int user_auth_id = Authentication.Connected_Id; /* 8 */
+
 
         [HttpGet]
         public async Task<IActionResult> SemaineProjets(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<SemaineProjet> semaineProjets = new List<SemaineProjet>();
             Semaine week = new Semaine();
@@ -39,6 +44,10 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin == "YES" || user.Admin == "CDP")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await responseProjets.Content.ReadAsStringAsync();
                     semaineProjets = JsonConvert.DeserializeObject<List<SemaineProjet>>(data);
@@ -49,10 +58,7 @@ namespace WEB_UI_MVC.Controllers
                     string data_week = await response_week.Content.ReadAsStringAsync();
                     week = JsonConvert.DeserializeObject<Semaine>(data_week);
                 }
-                if (user.Admin != "NO")
-                {
-                    return View("Forbidden");
-                }
+                
                 int totalH = 0;
                 int totalHA = 0;
                 int totalHNA = 0;
@@ -99,6 +105,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
@@ -114,19 +124,23 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin == "YES" || user.Admin == "CDP")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await responseSP.Content.ReadAsStringAsync();
                     SP = JsonConvert.DeserializeObject<SemaineProjet>(data);
+                }
+                else
+                {
+                    return View("NotFound");
                 }
                 HttpResponseMessage response_week = await _client.GetAsync(_client.BaseAddress + $"/UserWeek/api/UserWeek/GetById/{SP.UserId}/{SP.WeekId}");
                 if (response_week.IsSuccessStatusCode)
                 {
                     string data_week = await response_week.Content.ReadAsStringAsync();
                     week = JsonConvert.DeserializeObject<Semaine>(data_week);
-                }
-                if (user.Admin != "NO")
-                {
-                    return View("Forbidden");
                 }
                 SemainesViewModel semainesViewModel = new SemainesViewModel()
                 {
@@ -147,6 +161,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Ajouter(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             Semaine semaine = new Semaine();
             List<Projet> projets = new List<Projet>();
@@ -161,10 +179,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
-            }
-            if (user.Admin != "NO")
-            {
-                return View("Forbidden");
+                if (user.Admin == "YES" || user.Admin == "CDP")
+                {
+                    return View("Forbidden");
+                }
             }
 
             HttpResponseMessage responseProjets = await _client.GetAsync(_client.BaseAddress + "/Project");
@@ -248,6 +266,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Modifier(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             SemaineProjet SP = new SemaineProjet();
             Utilisateurs user = new Utilisateurs();
             Semaine week = new Semaine();
@@ -260,20 +282,24 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin == "YES" || user.Admin == "CDP")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await response.Content.ReadAsStringAsync();
                     SP = JsonConvert.DeserializeObject<SemaineProjet>(data);
 
+                }
+                else
+                {
+                    return View("NotFound");
                 }
                 HttpResponseMessage response_week = await _client.GetAsync(_client.BaseAddress + $"/UserWeek/api/UserWeek/GetById/{SP.UserId}/{SP.WeekId}");
                 if (response_week.IsSuccessStatusCode)
                 {
                     string data_week = await response_week.Content.ReadAsStringAsync();
                     week = JsonConvert.DeserializeObject<Semaine>(data_week);
-                }
-                if (user.Admin != "NO")
-                {
-                    return View("Forbidden");
                 }
 
                 List<Projet> projets = new List<Projet>();
@@ -358,6 +384,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Supprimer(int id, int id_week)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             Semaine week = new Semaine();
 
@@ -372,6 +402,10 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin == "YES" || user.Admin == "CDP")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await responseSP.Content.ReadAsStringAsync();
                     SP = JsonConvert.DeserializeObject<SemaineProjet>(data);
@@ -382,9 +416,9 @@ namespace WEB_UI_MVC.Controllers
                     string data_week = await response_week.Content.ReadAsStringAsync();
                     week = JsonConvert.DeserializeObject<Semaine>(data_week);
                 }
-                if (user.Admin != "NO")
+                else
                 {
-                    return View("Forbidden");
+                    return View("NotFound");
                 }
                 SemainesViewModel semainesViewModel = new SemainesViewModel()
                 {
@@ -443,12 +477,16 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> SemaineProjetsUser(int id, int id_user)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             Utilisateurs utilis = new Utilisateurs();
             List<SemaineProjet> semaineProjets = new List<SemaineProjet>();
             Semaine week = new Semaine();
 
-            HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
+            HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
             if (responseUser.IsSuccessStatusCode)
             {
                 HttpResponseMessage responseProjets = await _client.GetAsync(_client.BaseAddress + "/UserWeek/api/UserWeek/GetAllProjectsForThisWeek/" + id_user + "/" + id);
@@ -457,9 +495,17 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin == "NO")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await responseProjets.Content.ReadAsStringAsync();
                     semaineProjets = JsonConvert.DeserializeObject<List<SemaineProjet>>(data);
+                }
+                else
+                {
+                    return View("NotFound");
                 }
                 HttpResponseMessage response_week = await _client.GetAsync(_client.BaseAddress + $"/UserWeek/api/UserWeek/GetById/{id_user}/{id}");
                 if (response_week.IsSuccessStatusCode)
@@ -467,10 +513,7 @@ namespace WEB_UI_MVC.Controllers
                     string data_week = await response_week.Content.ReadAsStringAsync();
                     week = JsonConvert.DeserializeObject<Semaine>(data_week);
                 }
-                if (user.Admin == "NO")
-                {
-                    return View("Forbidden");
-                }
+                
                 int totalH = 0;
                 int totalHA = 0;
                 int totalHNA = 0;
@@ -520,9 +563,13 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailsSemaineUser(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
-            HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
+            HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
             if (responseUser.IsSuccessStatusCode)
             {
                 SemaineProjet SP = new SemaineProjet();
@@ -533,13 +580,17 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin == "NO")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await responseSP.Content.ReadAsStringAsync();
                     SP = JsonConvert.DeserializeObject<SemaineProjet>(data);
                 }
-                if (user.Admin == "NO")
+                else
                 {
-                    return View("Forbidden");
+                    return View("NotFound");
                 }
                 SemainesViewModel svm = new SemainesViewModel()
                 {
@@ -563,6 +614,7 @@ namespace WEB_UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ValiderSemaineUser(int id)
         {
+
             try
             {
                 HttpResponseMessage responseProjet = await _client.GetAsync($"{_client.BaseAddress}/UserWeekProject/{id}");

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.ViewModels;
+using WEB_UI_MVC.Auth;
+
 
 namespace WEB_UI_MVC.Controllers
 {
@@ -20,13 +22,16 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int user_auth_id = 2;
-        int admin_auth_id = 2;
+        int user_auth_id = Authentication.Connected_Id; /* 8 */
 
         // GET: PublicationsController
         [HttpGet]
         public async Task<IActionResult> Publications()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<Publication> publications = new List<Publication>();
 
@@ -60,6 +65,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Ajouter()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
@@ -67,6 +76,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES" && user.Admin != "CDP")
+                {
+                    return View("Forbidden");
+                }
             }
             var viewModel = new PublicationsViewModel
             {
@@ -74,11 +87,7 @@ namespace WEB_UI_MVC.Controllers
                 Publication = new() { },
                 Utilisateur = user
             };
-            if (user.Admin == "YES" || user.Admin == "CDP")
-            {
-                return View(viewModel);
-            }
-            return View("Forbidden");
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -112,6 +121,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<ActionResult> Modifier(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             try
             {
                 Utilisateurs user = new Utilisateurs();
@@ -127,9 +140,17 @@ namespace WEB_UI_MVC.Controllers
                     {
                         string dataUser = await responseUser.Content.ReadAsStringAsync();
                         user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                        if (user.Admin != "YES" && user.Admin != "CDP")
+                        {
+                            return View("Forbidden");
+                        }
 
                         string data = await response.Content.ReadAsStringAsync();
                         publication = JsonConvert.DeserializeObject<Publication>(data);
+                    }
+                    else
+                    {
+                        return View("NotFound");
                     }
                     PublicationsViewModel pvm = new PublicationsViewModel()
                     {
@@ -137,10 +158,7 @@ namespace WEB_UI_MVC.Controllers
                         Publication = publication,
                         Utilisateur = user
                     };
-                    if (user.Admin == "YES" || user.Admin == "CDP")
-                    {
-                        return View(pvm);
-                    }
+                    return View(pvm);
                 }
                 return View("Forbidden");
             }
@@ -178,6 +196,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Supprimer(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + user_auth_id);
@@ -191,9 +213,17 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin != "YES" && user.Admin != "CDP")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await response.Content.ReadAsStringAsync();
                     publication = JsonConvert.DeserializeObject<Publication>(data);
+                }
+                else
+                {
+                    return View("NotFound");
                 }
                 PublicationsViewModel pvm = new PublicationsViewModel()
                 {

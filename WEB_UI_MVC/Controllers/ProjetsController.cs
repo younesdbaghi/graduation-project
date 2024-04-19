@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System.Text;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.ViewModels;
+using WEB_UI_MVC.Auth;
+
 
 namespace WEB_UI_MVC.Controllers
 {
@@ -20,11 +22,15 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int admin_auth_id = 2;
+        int admin_auth_id = Authentication.Connected_Id;
 
         [HttpGet]
         public async Task<IActionResult> Projets()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<Projet> projets = new List<Projet>();
 
@@ -33,6 +39,11 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+
+                if(user.Admin != "YES" && user.Admin != "CDP")
+                {
+                    return View("Forbidden");
+                }
 
                 HttpResponseMessage responseProj = await _client.GetAsync(_client.BaseAddress + "/Project");
                 if (responseProj.IsSuccessStatusCode)
@@ -56,6 +67,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Ajouter()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -63,6 +78,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES" && user.Admin != "CDP")
+                {
+                    return View("Forbidden");
+                }
             }
             var viewModel = new ProjetsViewModel
             {
@@ -70,11 +89,7 @@ namespace WEB_UI_MVC.Controllers
                 Projet = new() { },
                 Utilisateur = user
             };
-            if (user.Admin == "YES" || user.Admin == "CDP")
-            {
-                return View(viewModel);
-            }
-            return View("Forbidden");
+            return View(viewModel);
         }
 
 
@@ -114,6 +129,10 @@ namespace WEB_UI_MVC.Controllers
         {
             try
             {
+                if (!Authentication.Connected)
+                {
+                    return RedirectToAction("Se_Connecter", "Auth");
+                }
                 Utilisateurs user = new Utilisateurs();
 
                 HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -127,9 +146,17 @@ namespace WEB_UI_MVC.Controllers
                     {
                         string dataUser = await responseUser.Content.ReadAsStringAsync();
                         user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                        if (user.Admin != "YES" && user.Admin != "CDP")
+                        {
+                            return View("Forbidden");
+                        }
 
                         string data = await response.Content.ReadAsStringAsync();
                         projet = JsonConvert.DeserializeObject<Projet>(data);
+                    }
+                    else
+                    {
+                        return View("NotFound");
                     }
                     ProjetsViewModel pvm = new ProjetsViewModel()
                     {
@@ -137,10 +164,7 @@ namespace WEB_UI_MVC.Controllers
                         Projet = projet,
                         Utilisateur = user
                     };
-                    if (user.Admin == "YES" || user.Admin == "CDP")
-                    {
-                        return View(pvm);
-                    }
+                    return View(pvm);
                 }
                 return View("Forbidden");
             }
@@ -159,6 +183,7 @@ namespace WEB_UI_MVC.Controllers
         {
             try
             {
+
                 dynamic obj = new System.Dynamic.ExpandoObject(); // Crée un nouvel objet dynamique vide
                 obj.Id = PVM.Projet.Id;
                 obj.ProjectName = PVM.Projet.ProjectName;
@@ -186,6 +211,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Supprimer(int id)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
 
             HttpResponseMessage responseUser = await _client.GetAsync(_client.BaseAddress + "/User/api/User/GetById/" + admin_auth_id);
@@ -199,13 +228,17 @@ namespace WEB_UI_MVC.Controllers
                 {
                     string dataUser = await responseUser.Content.ReadAsStringAsync();
                     user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                    if (user.Admin != "YES" && user.Admin != "CDP")
+                    {
+                        return View("Forbidden");
+                    }
 
                     string data = await response.Content.ReadAsStringAsync();
                     projet = JsonConvert.DeserializeObject<Projet>(data);
                 }
-                if (user.Admin == "NO")
+                else
                 {
-                    return View("Forbidden");
+                    return View("NotFound");
                 }
                 ProjetsViewModel pvm = new ProjetsViewModel()
                 {

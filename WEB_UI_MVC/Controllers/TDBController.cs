@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using WEB_UI_MVC.Models;
 using WEB_UI_MVC.Objects;
 using WEB_UI_MVC.ViewModels;
+using WEB_UI_MVC.Auth;
+
 
 namespace WEB_UI_MVC.Controllers
 {
@@ -19,13 +21,18 @@ namespace WEB_UI_MVC.Controllers
         }
 
         /* L'utilisateur connecté */
-        int admin_auth_id = 2;
+        int admin_auth_id = Authentication.Connected_Id;
+
 
 
 
         [HttpGet]
         public async Task<IActionResult> Projets()
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             List<Projet> projets = new List<Projet>();
 
@@ -34,6 +41,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES")
+                {
+                    return View("Forbidden");
+                }
 
                 HttpResponseMessage responseUsers = await _client.GetAsync(_client.BaseAddress + "/Project");
                 if (responseUsers.IsSuccessStatusCode)
@@ -42,10 +53,6 @@ namespace WEB_UI_MVC.Controllers
                     projets = JsonConvert.DeserializeObject<List<Projet>>(dataProjets);
                 }
 
-                if (user.Admin == "NO")
-                {
-                    return View("Forbidden");
-                }
                 var viewModel = new TdbViewModel
                 {
                     Utilisateurs = new() { },
@@ -64,6 +71,10 @@ namespace WEB_UI_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Statistiques(int id_projet, string nom_projet)
         {
+            if (!Authentication.Connected)
+            {
+                return RedirectToAction("Se_Connecter", "Auth");
+            }
             Utilisateurs user = new Utilisateurs();
             Utilisateurs us = new Utilisateurs();
             Projet projet = new Projet();
@@ -75,6 +86,10 @@ namespace WEB_UI_MVC.Controllers
             {
                 string dataUser = await responseUser.Content.ReadAsStringAsync();
                 user = JsonConvert.DeserializeObject<Utilisateurs>(dataUser);
+                if (user.Admin != "YES")
+                {
+                    return View("Forbidden");
+                }
 
                 HttpResponseMessage responseProj = await _client.GetAsync(_client.BaseAddress + "/Project/" + id_projet);
                 if (responseProj.IsSuccessStatusCode)
@@ -89,10 +104,6 @@ namespace WEB_UI_MVC.Controllers
                         projets = JsonConvert.DeserializeObject<List<SemaineProjet>>(dataProjets);
                     }
 
-                    if (user.Admin == "NO")
-                    {
-                        return View("Forbidden");
-                    }
 
                     /* ----- ----- ----- ----- ----- ----- */
                     /* ----- CALCUL DES STATISTIQUES ----- */
@@ -149,81 +160,12 @@ namespace WEB_UI_MVC.Controllers
                     };
                     return View(viewModel);
                 }
+                else
+                {
+                    return View("NotFound");
+                }
             }
-
             return View();
-        }
-
-
-
-
-        // GET: TDBController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: TDBController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TDBController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TDBController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TDBController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TDBController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TDBController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
